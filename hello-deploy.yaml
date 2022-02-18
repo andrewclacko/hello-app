@@ -11,6 +11,7 @@ metadata:
   name: hello-ingress 
   namespace: hellons
 spec:
+  ingressClassName: nginx
   rules:
   - host: kubernetes.docker.internal
     http:
