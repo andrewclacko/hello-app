@@ -22,7 +22,7 @@ spec:
           service:
             name: hello-service
             port: 
-              number: 443
+              number: 80
   tls:
   - hosts:
     - kubernetes.docker.internal
@@ -66,5 +66,5 @@ spec:
   ports:
   - name: http
     protocol: TCP
-    port: 443
+    port: 80
     targetPort: 50001
