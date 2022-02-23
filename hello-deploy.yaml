@@ -68,4 +68,3 @@ spec:
     protocol: TCP
     port: 443
     targetPort: 50001
-
