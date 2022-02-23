@@ -26,7 +26,7 @@ spec:
   tls:
   - hosts:
     - kubernetes.docker.internal
-    secretName: keycloak-tls
+    secretName: wildcard-tls
 
 ---
 apiVersion: apps/v1
