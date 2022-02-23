@@ -23,6 +23,10 @@ spec:
             name: hello-service
             port: 
               number: 80
+  tls:
+  - hosts:
+    - kubernetes.docker.internal
+    secretName: keycloak-tls
 
 ---
 apiVersion: apps/v1
