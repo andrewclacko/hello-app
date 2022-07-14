@@ -13,20 +13,20 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: hello.kubernetes.docker.internal
+  - host: kubernetes.docker.internal
     http:
       paths:
-      - path: /
+      - path: /hello
         pathType: Prefix
         backend:
           service:
             name: hello-service
             port: 
               number: 80
-#   tls:
-#   - hosts:
-#     - hello.kubernetes.docker.internal
-#     secretName: hello
+  tls:
+  - hosts:
+    - kubernetes.docker.internal
+    secretName: hello
 
 ---
 apiVersion: apps/v1
