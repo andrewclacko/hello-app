@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: hellons
+  name: hello
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: hello-ingress 
-  namespace: hellons
+  namespace: hello
 spec:
   ingressClassName: nginx
   rules:
@@ -26,14 +26,14 @@ spec:
   tls:
   - hosts:
     - hello.kubernetes.docker.internal
-    secretName: wildcard-tls
+    secretName: hello
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello
-  namespace: hellons
+  namespace: hello
 spec:
   selector:
     matchLabels:
@@ -59,7 +59,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: hello-service
-  namespace: hellons
+  namespace: hello
 spec:
   type: ClusterIP
   selector:
