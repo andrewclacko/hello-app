@@ -23,10 +23,10 @@ spec:
             name: hello-service
             port: 
               number: 80
-#   tls:
-#   - hosts:
-#     - kubernetes.docker.internal
-#     secretName: hello
+  tls:
+  - hosts:
+    - kubernetes.docker.internal
+    secretName: hello
 
 ---
 apiVersion: apps/v1
