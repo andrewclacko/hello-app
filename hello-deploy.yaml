@@ -39,7 +39,7 @@ spec:
     matchLabels:
       app: hello
       version: 2.0.0
-  replicas: 3
+  replicas: 2
   template:
     metadata:
       labels:
