@@ -1,0 +1,104 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: hello-gateway
+  namespace: mct
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - hello.playground.ccycloud.io
+    port:
+      name: https-frontend
+      number: 80
+      protocol: HTTP
+#    tls:
+#      credentialName: tls-secret
+#      mode: SIMPLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: hello
+  namespace: mct
+spec:
+  gateways:
+  - hello-gateway
+  tls:
+  - match:
+    - port: 443
+      sniHosts:
+      - hello.playground.ccycloud.io
+    route:
+    - destination:
+        host: hello-service.mct.svc.cluster.local
+        port:
+          number: 443
+  hosts:
+  - hello.playground.ccycloud.io  
+---
+
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: hello-http
+  namespace: mct
+spec:
+  gateways:
+  - hello-gateway
+  http:
+  - match:
+    - port: 80
+    route:
+    - destination:
+        host: hello-service.mct.svc.cluster.local
+        port:
+          number: 80
+  hosts:
+  - hello.playground.ccycloud.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+  namespace: mct
+spec:
+  selector:
+    matchLabels:
+      app: hello
+      version: 2.0.0
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: hello
+        version: 2.0.0
+    spec:
+      containers:
+      - name: hello
+        image: "gcr.io/google-samples/hello-app:2.0"
+        env:
+        - name: "PORT"
+          value: "50001"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-service
+  namespace: mct
+spec:
+  type: ClusterIP
+  selector:
+    app: hello
+    version: 2.0.0
+  ports:
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 50001
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 50001
